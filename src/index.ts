@@ -13,29 +13,29 @@ const resetTables = async (): Promise<void> => {
 const main = async (): Promise<void> => {
   await resetTables();
 
-  const newUserId = createId();
+  const userId = createId();
   await dbClient
     .insertInto('user')
     .values([
       {
-        id: newUserId,
+        id: userId,
         email: `${createId()}@example.com`,
       },
     ])
     .execute();
 
-  const newPostId = createId();
+  const postId = createId();
   await dbClient
     .insertInto('post')
     .values({
-      id: newPostId,
+      id: postId,
       title: 'Hello, World!',
-      authorId: newUserId,
+      authorId: userId,
       postedAt: new Date(),
     })
     .execute();
 
-  const usersWithPost = await dbClient
+  const userWithPost = await dbClient
     .selectFrom('user')
     .selectAll('user')
     .select((eb) => [
@@ -46,23 +46,23 @@ const main = async (): Promise<void> => {
           .whereRef('post.authorId', '=', 'user.id'),
       ).as('post'),
     ])
-    .where('user.id', '=', newUserId)
+    .where('user.id', '=', userId)
     .executeTakeFirstOrThrow();
 
   // ! This is the issue
-  // The inferred type of usersWithPost.post.postedAt is Date but the actual value is a string
+  // The inferred type of userWithPost.post.postedAt is Date but the actual value is a string
   console.log(
-    `usersWithPost.post.postedAt is ${typeof usersWithPost.post?.postedAt}`,
+    `userWithPost.post.postedAt is ${typeof userWithPost.post?.postedAt}`,
   );
 
   // So this code throws an error at runtime
-  // console.log(usersWithPost.post?.postedAt.toISOString());
+  // console.log(userWithPost.post?.postedAt.toISOString());
 
   // This code works fine
   const post = await dbClient
     .selectFrom('post')
     .selectAll('post')
-    .where('id', '=', newPostId)
+    .where('id', '=', postId)
     .executeTakeFirstOrThrow();
 
   console.log(`post.postedAt is ${typeof post.postedAt}`);
