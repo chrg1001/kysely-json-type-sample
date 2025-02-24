@@ -49,6 +49,10 @@
       "correctness": {
         "noNodejsModules": "off",
         "useImportExtensions": "off"
+      },
+      "suspicious": {
+        "noConsole": "off",
+        "noConsoleLog": "off"
       }
     }
   },
