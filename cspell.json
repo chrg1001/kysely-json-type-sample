@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en",
+  "enableFiletypes": ["typescript", "markdown", "yaml", "toml"],
+  "enabledLanguageIds": [
+    "typescript",
+    "json",
+    "jsonc",
+    "markdown",
+    "plaintext",
+    "text",
+    "yaml",
+    "toml"
+  ],
+  "ignorePaths": [".vscode", "node_modules"],
+  "dictionaries": ["typescript", "node"],
+  "words": ["biomejs"]
+}

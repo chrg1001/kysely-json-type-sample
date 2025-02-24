@@ -1,0 +1,95 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignore": ["**/node_modules", "**/package.json", "**/dist"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "style": {
+        "useNamingConvention": {
+          "level": "warn",
+          "options": {
+            "strictCase": false,
+            "conventions": [
+              {
+                "selector": {
+                  "kind": "objectLiteralMember"
+                },
+                "formats": ["camelCase", "PascalCase"]
+              },
+              {
+                "selector": {
+                  "kind": "typeMember"
+                },
+                "formats": ["camelCase", "PascalCase"]
+              }
+            ]
+          }
+        }
+      },
+      "nursery": {
+        "noCommonJs": "warn",
+        "noEnum": "warn",
+        "noSubstr": "warn",
+        "noUselessEscapeInRegex": "warn"
+      },
+      "performance": {
+        "noBarrelFile": "off"
+      },
+      "correctness": {
+        "noNodejsModules": "off",
+        "useImportExtensions": "off"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true
+    },
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2
+    }
+  },
+  "overrides": [
+    {
+      // https://github.com/biomejs/biome/discussions/283
+      "include": ["*.test.ts", "*.spec.ts"],
+      "javascript": {
+        "globals": [
+          "afterEach",
+          "afterAll",
+          "beforeEach",
+          "beforeAll",
+          "describe",
+          "expect",
+          "it",
+          "test",
+          "jest"
+        ]
+      }
+    }
+  ]
+}
