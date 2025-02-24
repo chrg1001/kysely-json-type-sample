@@ -8,13 +8,12 @@ export type Post = {
   id: string;
   title: string;
   authorId: string;
-  createdAt: Generated<Timestamp>;
+  postedAt: Timestamp;
 };
 export type User = {
   id: string;
   email: string;
 };
-// biome-ignore lint/style/useNamingConvention: <explanation>
 export type DB = {
   post: Post;
   user: User;

@@ -21,7 +21,7 @@ const main = async (): Promise<void> => {
       id: newPostId,
       title: 'Hello, World!',
       authorId: newUserId,
-      createdAt: new Date(),
+      postedAt: new Date(),
     })
     .execute();
 
@@ -32,7 +32,7 @@ const main = async (): Promise<void> => {
       jsonObjectFrom(
         eb
           .selectFrom('post')
-          .select(['post.id', 'post.title', 'post.createdAt'])
+          .select(['post.id', 'post.title', 'post.postedAt'])
           .whereRef('post.authorId', '=', 'user.id'),
       ).as('post'),
     ])
@@ -40,13 +40,13 @@ const main = async (): Promise<void> => {
     .executeTakeFirstOrThrow();
 
   // ! This is the issue
-  // The inferred type of usersWithPost.post.createdAt is Date but the actual value is a string
+  // The inferred type of usersWithPost.post.postedAt is Date but the actual value is a string
   console.log(
-    `usersWithPost.post.createdAt is ${typeof usersWithPost.post?.createdAt}`,
+    `usersWithPost.post.postedAt is ${typeof usersWithPost.post?.postedAt}`,
   );
 
   // So this code throws an error at runtime
-  // console.log(usersWithPost.post?.createdAt.toISOString());
+  // console.log(usersWithPost.post?.postedAt.toISOString());
 
   // This code works fine
   const post = await dbClient
@@ -55,8 +55,8 @@ const main = async (): Promise<void> => {
     .where('id', '=', newPostId)
     .executeTakeFirstOrThrow();
 
-  console.log(`post.createdAt is ${typeof post.createdAt}`);
-  console.log(post.createdAt.toISOString());
+  console.log(`post.postedAt is ${typeof post.postedAt}`);
+  console.log(post.postedAt.toISOString());
 
   // Close DB Connection
   await dbClient.destroy();

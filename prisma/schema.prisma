@@ -21,11 +21,11 @@ model User {
 }
 
 model Post {
-  id        String   @id @map("id")
-  title     String   @map("title")
-  authorId  String   @map("author_id")
-  author    User     @relation(fields: [authorId], references: [id])
-  createdAt DateTime @default(now()) @map("created_at")
+  id       String   @id @map("id")
+  title    String   @map("title")
+  authorId String   @map("author_id")
+  author   User     @relation(fields: [authorId], references: [id])
+  postedAt DateTime @map("posted_at")
 
   @@map("post")
 }

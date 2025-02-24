@@ -9,7 +9,12 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["**/node_modules", "**/package.json", "**/dist"]
+    "ignore": [
+      "**/node_modules",
+      "**/package.json",
+      "**/dist",
+      "src/db/types.ts"
+    ]
   },
   "linter": {
     "enabled": true,
