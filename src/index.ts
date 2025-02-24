@@ -1,6 +1,13 @@
 import { createId } from '@paralleldrive/cuid2';
 import { jsonObjectFrom } from 'kysely/helpers/mysql';
+// import type { SelectQueryBuilderExpression } from '../node_modules/kysely/dist/esm/query-builder/select-query-builder-expression';
 import { dbClient } from './db/client';
+
+// type ExactPostType = {
+//   id: string;
+//   title: string;
+//   postedAt: string;
+// };
 
 const resetTables = async (): Promise<void> => {
   // Delete all rows from the tables
@@ -45,6 +52,16 @@ const main = async (): Promise<void> => {
           .select(['post.id', 'post.title', 'post.postedAt'])
           .whereRef('post.authorId', '=', 'user.id'),
       ).as('post'),
+      // jsonObjectFrom<ExactPostType>(
+      //   eb
+      //     .selectFrom('post')
+      //     .select(['post.id', 'post.title', 'post.postedAt'])
+      //     .whereRef(
+      //       'post.authorId',
+      //       '=',
+      //       'user.id',
+      //     ) as unknown as SelectQueryBuilderExpression<ExactPostType>,
+      // ).as('post'),
     ])
     .where('user.id', '=', userId)
     .executeTakeFirstOrThrow();
