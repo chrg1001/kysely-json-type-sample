@@ -35,3 +35,11 @@ bun run migration:migrate
 ```sh
 bun src/index.ts
 ```
+
+## Cleanup
+
+Clean up database:
+
+```sh
+docker compose down --rmi all --volumes --remove-orphans
+```
