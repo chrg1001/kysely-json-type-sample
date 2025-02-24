@@ -2,7 +2,17 @@ import { createId } from '@paralleldrive/cuid2';
 import { jsonObjectFrom } from 'kysely/helpers/mysql';
 import { dbClient } from './db/client';
 
+const resetTables = async (): Promise<void> => {
+  // Delete all rows from the tables
+  await dbClient.transaction().execute(async (trx) => {
+    await trx.deleteFrom('post').execute();
+    await trx.deleteFrom('user').execute();
+  });
+};
+
 const main = async (): Promise<void> => {
+  await resetTables();
+
   const newUserId = createId();
   await dbClient
     .insertInto('user')
